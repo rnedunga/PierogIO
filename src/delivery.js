@@ -59,20 +59,8 @@ function deliveryFee(order, delivery, profile) {
   if (delivery.zone === 'local') {
       fee += 399;
     } else if (delivery.zone === 'outer') {
-      fee += 699;
+      fee += 399;
     }
-
-  // for (const item of order.items) {
-  //   if (delivery.zone === 'local') {
-  //     fee += 399;
-  //   } else if (delivery.zone === 'outer') {
-  //     fee += 699;
-  //   }
-  // }
-
-  // if (delivery.rush) {
-  //   fee += 299;
-  // }
 
   return fee;
 }
