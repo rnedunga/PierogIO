@@ -1,6 +1,7 @@
 const fc = require('fast-check');
 const { total } = require('../../src/total');
 const { referenceTotal } = require('../../src/reference');
+const { deliveryFee } = require('../../src/delivery');
 
 describe('Property-Based Tests for Orders', () => {
   
@@ -48,6 +49,16 @@ describe('Property-Based Tests for Orders', () => {
         fc.property(orderArb, contextArb, (order, context) => {
           const result = total(order, context);
           return result >= 0 && Number.isInteger(result);
+        }),
+        { numRuns: 50 }
+      );
+    });
+
+    it('delivery should always be less than 700', () => {
+      fc.assert(
+        fc.property(orderArb, contextArb, (order, context) => {
+          const fee = deliveryFee(order, context.delivery, context.profile);
+          return fee >= 0 && fee < 700;
         }),
         { numRuns: 50 }
       );
